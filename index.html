@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>San Valentín 💘</title>
+  <style>
+    :root{
+      --bg1:#fff6f7;
+      --bg2:#fff0f2;
+      --card:#ffffff;
+      --text:#2b1b1f;
+      --muted:#6b4a52;
+      --accent:#c2185b;
+      --accent2:#8e1450;
+      --shadow: 0 18px 50px rgba(0,0,0,.12);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(1200px 800px at 20% 10%, var(--bg2), transparent 60%),
+                  radial-gradient(1200px 800px at 80% 90%, var(--bg1), transparent 60%),
+                  linear-gradient(135deg, #ffe3ea, #fff7f9);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      width:min(920px, 92vw);
+      padding: 18px;
+    }
+
+    .card{
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(194,24,91,.12);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 4vw, 42px);
+      position: relative;
+      overflow:hidden;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(194,24,91,.08);
+      color: var(--accent2);
+      font-weight: 700;
+      letter-spacing:.3px;
+      font-size: 14px;
+    }
+
+    .title{
+      margin: 14px 0 10px;
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.03;
+      letter-spacing: -0.8px;
+    }
+
+    .subtitle{
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: clamp(15px, 2.1vw, 18px);
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn{
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-weight: 800;
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+      letter-spacing: .2px;
+      font-size: 15px;
+      user-select:none;
+    }
+    .btn:active{transform: translateY(1px) scale(.99)}
+    .btn-primary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:white;
+      box-shadow: 0 12px 28px rgba(194,24,91,.28);
+    }
+    .btn-primary:hover{ box-shadow: 0 14px 34px rgba(194,24,91,.36); }
+    .btn-ghost{
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(194,24,91,.22);
+      color: var(--accent2);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 26px;
+      align-items:center;
+    }
+    @media (max-width: 760px){
+      .grid{grid-template-columns: 1fr; gap: 16px;}
+    }
+
+    .right{
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(194,24,91,.06);
+      border: 1px dashed rgba(194,24,91,.25);
+    }
+
+    .info{
+      display:grid;
+      gap: 10px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .pill{
+      display:inline-flex;
+      gap: 10px;
+      align-items:center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.05);
+    }
+
+    .kicker{
+      font-weight: 900;
+      color: var(--accent2);
+    }
+
+    .heart-bg{
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width: 240px;
+      height: 240px;
+      opacity:.22;
+      transform: rotate(12deg);
+      pointer-events:none;
+    }
+
+    .hidden{ display:none; }
+
+    /* confetti hearts */
+    .confetti{
+      position: fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index: 50;
+    }
+    .piece{
+      position:absolute;
+      font-size: 18px;
+      opacity:.95;
+      animation: fall linear forwards;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+    }
+    @keyframes fall{
+      to{
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.95;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="confetti" id="confetti"></div>
+
+  <main class="wrap">
+    <!-- PANTALLA 1 -->
+    <section class="card" id="screen1" aria-label="Pregunta San Valentín">
+      <svg class="heart-bg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 21s-7.5-4.6-9.6-9C.8 8.9 2.6 6 5.8 6c1.8 0 3.1 1 4 2.1C10.7 7 12 6 13.8 6 17 6 18.8 8.9 21.6 12c-2.1 4.4-9.6 9-9.6 9z"
+              fill="#c2185b"/>
+      </svg>
+
+      <div class="grid">
+        <div>
+          <span class="badge">💖 San Valentín</span>
+          <h1 class="title">¿Quieres ser mi San Valentín?</h1>
+          <p class="subtitle">
+            Una pregunta simple… pero con mucho significado. ✨
+          </p>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="yesBtn">Sí, quiero 💕</button>
+            <button class="btn btn-ghost" id="noBtn">Mmm… todavía no 🙈</button>
+          </div>
+        </div>
+
+        <aside class="right">
+          <div class="pill"><span>💌</span><span class="kicker">Pista:</span> <span>hay una invitación especial…</span></div>
+          <div class="info">
+            <div>🌹 Un detalle bonito, sin complicaciones.</div>
+            <div>🍕 Algo rico para compartir.</div>
+            <div>✨ Una noche pensada con cariño.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PANTALLA 2 -->
+    <section class="card hidden" id="screen2" aria-label="Invitación">
+      <svg class="heart-bg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 21s-7.5-4.6-9.6-9C.8 8.9 2.6 6 5.8 6c1.8 0 3.1 1 4 2.1C10.7 7 12 6 13.8 6 17 6 18.8 8.9 21.6 12c-2.1 4.4-9.6 9-9.6 9z"
+              fill="#c2185b"/>
+      </svg>
+
+      <span class="badge">🍷✨ Invitación</span>
+      <h2 class="title" style="font-size:clamp(30px,4.5vw,52px);">Entonces… tengo un plan para ti</h2>
+      <p class="subtitle">
+        Este <strong>14 de febrero de 2026</strong>, quiero compartir una noche contigo:
+        buena comida, buena conversación y cero prisas.
+      </p>
+
+      <div class="grid" style="margin-top:10px;">
+        <div>
+          <div class="pill" style="margin-bottom:12px;">
+            <span>📍</span>
+            <span><strong>Il Vicolo Pizzeria</strong></span>
+          </div>
+
+          <div class="info">
+            <div>📅 <strong>Fecha:</strong> 14/02/2026</div>
+            <div>🍕 <strong>Lugar:</strong> Il Vicolo Pizzeria</div>
+            <div>💫 <strong>Dress code:</strong> como te sientas más tú</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="acceptBtn">Acepto la invitación 🍕❤️</button>
+            <button class="btn btn-ghost" id="backBtn">Volver ⟵</button>
+          </div>
+        </div>
+
+        <aside class="right">
+          <div class="pill"><span>❤️</span><span class="kicker">Mensaje:</span> <span>Los mejores planes se disfrutan con la persona correcta.</span></div>
+          <p class="subtitle" style="margin-top:12px; margin-bottom:0;">
+            Si dices que sí… prometo que será una noche bonita. ✨
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PANTALLA 3 (confirmación) -->
+    <section class="card hidden" id="screen3" aria-label="Confirmación">
+      <span class="badge">✅ Confirmado</span>
+      <h2 class="title" style="font-size:clamp(30px,4.5vw,52px);">¡Yay! 💘</h2>
+      <p class="subtitle">
+        Queda oficial: <strong>14 de febrero de 2026</strong> en <strong>Il Vicolo Pizzeria</strong>.  
+        <br/>Ahora solo falta sonreír… y llegar con hambre 🍕✨
+      </p>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="copyBtn">Copiar mensaje para enviar 📩</button>
+        <button class="btn btn-ghost" id="restartBtn">Reiniciar</button>
+      </div>
+
+      <p class="subtitle" style="margin-top:14px; font-size:14px;">
+        Tip: Puedes editar el texto del mensaje en el código si quieres que sea más formal o más gracioso.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const screen1 = document.getElementById("screen1");
+    const screen2 = document.getElementById("screen2");
+    const screen3 = document.getElementById("screen3");
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const backBtn = document.getElementById("backBtn");
+    const acceptBtn = document.getElementById("acceptBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const copyBtn = document.getElementById("copyBtn");
+
+    const confetti = document.getElementById("confetti");
+
+    function show(a, b, c){
+      screen1.classList.toggle("hidden", !a);
+      screen2.classList.toggle("hidden", !b);
+      screen3.classList.toggle("hidden", !c);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function heartConfetti(){
+      const hearts = ["💖","💘","💝","❤️","💕","💞"];
+      const n = 40;
+      for(let i=0;i<n;i++){
+        const s = document.createElement("div");
+        s.className = "piece";
+        s.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        s.style.left = Math.random()*100 + "vw";
+        s.style.top = (-10 - Math.random()*20) + "vh";
+        s.style.fontSize = (14 + Math.random()*18) + "px";
+        const dur = 2.6 + Math.random()*2.4;
+        s.style.animationDuration = dur + "s";
+        s.style.animationDelay = (Math.random()*0.4) + "s";
+        confetti.appendChild(s);
+
+        // limpiar
+        setTimeout(() => s.remove(), (dur + 1) * 1000);
+      }
+    }
+
+    yesBtn.addEventListener("click", () => {
+      show(false, true, false);
+      heartConfetti();
+    });
+
+    noBtn.addEventListener("mouseenter", () => {
+      // Botón "escurridizo" suave
+      const dx = (Math.random() * 140) - 70;
+      const dy = (Math.random() * 80) - 40;
+      noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+    noBtn.addEventListener("mouseleave", () => {
+      noBtn.style.transform = "translate(0,0)";
+    });
+
+    backBtn.addEventListener("click", () => show(true, false, false));
+
+    acceptBtn.addEventListener("click", () => {
+      show(false, false, true);
+      heartConfetti();
+    });
+
+    restartBtn.addEventListener("click", () => show(true, false, false));
+
+    copyBtn.addEventListener("click", async () => {
+      const msg =
+`💖 ¿Quieres ser mi San Valentín?
+
+🍷✨ Te invito este 14 de febrero de 2026 a:
+📍 Il Vicolo Pizzeria
+
+¿Te apuntas? 💕`;
+
+      try{
+        await navigator.clipboard.writeText(msg);
+        copyBtn.textContent = "¡Copiado! ✅";
+        setTimeout(() => copyBtn.textContent = "Copiar mensaje para enviar 📩", 1600);
+      }catch(e){
+        alert("No pude copiar automáticamente. Aquí está el mensaje:\n\n" + msg);
+      }
+    });
+  </script>
+</body>
+</html>
