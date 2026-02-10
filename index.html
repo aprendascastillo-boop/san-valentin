@@ -16,37 +16,8 @@ body{
   font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   overflow:hidden;
 }
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-.heart-float{
-  position: absolute;
-  bottom: -40px;
-  animation-name: floatUp;
-  animation-timing-function: linear;
-  animation-iteration-count: 1;
-  opacity: 0.9;
-  z-index: 1;
-}
 
-@keyframes floatUp{
-  from{
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  to{
-    transform: translateY(-120vh) scale(1.6);
-    opacity: 0;
-  }
-}
-
+/* Tarjeta principal */
 .card{
   background:#fff;
   padding:40px;
@@ -108,22 +79,30 @@ button{
   color:#c2185b;
 }
 
-.heart-float{
+/* Corazones */
+.heart{
   position:absolute;
-  font-size:24px;
-  animation:float 6s linear infinite;
-  opacity:.8;
+  bottom:-40px;
+  animation:floatUp linear forwards;
+  opacity:.9;
+  z-index:1;
 }
 
-@keyframes float{
+@keyframes floatUp{
   from{
-    transform:translateY(100vh) scale(1);
+    transform:translateY(0) scale(1);
     opacity:1;
   }
   to{
-    transform:translateY(-10vh) scale(1.5);
+    transform:translateY(-120vh) scale(1.6);
     opacity:0;
   }
+}
+
+/* Fade */
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(.9);}
+  to{opacity:1; transform:scale(1);}
 }
 </style>
 </head>
@@ -150,26 +129,25 @@ noBtn.addEventListener("mouseenter",()=>{
   noBtn.style.transform=`translate(${x}px,${y}px)`;
 });
 
-function crearCorazones(){
-  const interval = setInterval(() => {
-    for(let i=0;i<10;i++){
-      const heart = document.createElement("div");
-      heart.className = "heart-float";
-      heart.innerHTML = ["💖","💗","💘","💕"][Math.floor(Math.random()*4)];
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 4 + Math.random() * 4 + "s";
-      heart.style.fontSize = 18 + Math.random() * 35 + "px";
+function lanzarCorazones(){
+  const interval = setInterval(()=>{
+    for(let i=0;i<8;i++){
+      const heart=document.createElement("div");
+      heart.className="heart";
+      heart.innerHTML=["💖","💗","💕","💘"][Math.floor(Math.random()*4)];
+      heart.style.left=Math.random()*100+"vw";
+      heart.style.fontSize=18+Math.random()*30+"px";
+      heart.style.animationDuration=4+Math.random()*4+"s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 8000);
+      setTimeout(()=>heart.remove(),8000);
     }
-  }, 400);
+  },350);
 
-  setTimeout(() => clearInterval(interval), 4000);
+  setTimeout(()=>clearInterval(interval),4000);
 }
 
-
 function aceptar(){
-  crearCorazones();
+  lanzarCorazones();
 
   setTimeout(()=>{
     document.body.innerHTML=`
@@ -179,7 +157,6 @@ function aceptar(){
       align-items:center;
       justify-content:center;
       background:linear-gradient(135deg,#ffe3ea,#fff7f9);
-      font-family:system-ui;
       text-align:center;
       padding:20px;
     ">
@@ -189,6 +166,7 @@ function aceptar(){
         border-radius:30px;
         box-shadow:0 25px 60px rgba(0,0,0,.15);
         max-width:520px;
+        animation:fadeIn 1.5s ease;
       ">
         <h2>💘 Entonces es una cita 💕</h2>
         <p style="margin-top:15px;">
@@ -212,7 +190,7 @@ function aceptar(){
         ">Ver más 💖</button>
       </div>
     </div>`;
-  },1200);
+  },2500);
 }
 
 function final(){
@@ -232,14 +210,11 @@ function final(){
       border-radius:30px;
       box-shadow:0 25px 60px rgba(0,0,0,.15);
       max-width:500px;
+      animation:fadeIn 1.5s ease;
     ">
-      <img src=foto nostros jpg.jpeg💖"
-         style="
-       width:100%;
-       border-radius:20px;
-       margin-bottom:15px;
-       animation:fadeIn 1.5s ease;
-     ">
+      <img src="foto nostros jpg.jpeg"
+           style="width:100%;border-radius:20px;margin-bottom:15px;">
+      <p style="color:#6b4a52;font-size:16px;">
         Mi vida entera 💖
       </p>
     </div>
