@@ -120,6 +120,9 @@ button{
   </div>
 </div>
 
+<!-- 🎶 Música -->
+<audio id="musica" src="musica.mp3" loop></audio>
+
 <script>
 const noBtn = document.getElementById("noBtn");
 
@@ -129,6 +132,7 @@ noBtn.addEventListener("mouseenter",()=>{
   noBtn.style.transform=`translate(${x}px,${y}px)`;
 });
 
+/* Corazones */
 function lanzarCorazones(){
   const interval = setInterval(()=>{
     for(let i=0;i<8;i++){
@@ -146,7 +150,23 @@ function lanzarCorazones(){
   setTimeout(()=>clearInterval(interval),4000);
 }
 
+/* Aceptar */
 function aceptar(){
+  const audio = document.getElementById("musica");
+  audio.currentTime = 0.20;   // 🎵 empieza en el segundo 0.20
+  audio.volume = 0;
+  audio.play();
+
+  let vol = 0;
+  const fade = setInterval(()=>{
+    if(vol < 0.6){
+      vol += 0.02;
+      audio.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
+  },200);
+
   lanzarCorazones();
 
   setTimeout(()=>{
@@ -193,6 +213,7 @@ function aceptar(){
   },2500);
 }
 
+/* Final */
 function final(){
   document.body.innerHTML=`
   <div style="
