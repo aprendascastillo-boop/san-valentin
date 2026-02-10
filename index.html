@@ -6,167 +6,236 @@
 <title>San Valentín 💖</title>
 
 <style>
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#ffe3ea,#fff7f9);
-  font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  overflow:hidden;
-}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#ffe3ea,#fff7f9);
+    font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    overflow:hidden;
+  }
 
-/* Corazones */
-.heart{
-  position:absolute;
-  bottom:-40px;
-  animation:floatUp linear forwards;
-  opacity:.9;
-  z-index:1;
-}
+  .card{
+    background:#fff;
+    padding:40px;
+    border-radius:28px;
+    box-shadow:0 25px 60px rgba(0,0,0,.12);
+    max-width:520px;
+    width:90%;
+    text-align:center;
+    animation:fadeIn 1.2s ease;
+    position:relative;
+    z-index:2;
+  }
 
-@keyframes floatUp{
-  from{transform:translateY(0) scale(1);opacity:1;}
-  to{transform:translateY(-120vh) scale(1.6);opacity:0;}
-}
+  .badge{
+    display:inline-block;
+    background:#ffe6ee;
+    color:#c2185b;
+    padding:8px 14px;
+    border-radius:999px;
+    font-weight:700;
+    margin-bottom:16px;
+  }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(.9);}
-  to{opacity:1;transform:scale(1);}
-}
+  h1{
+    font-size:42px;
+    margin:0 0 12px;
+    color:#2b1b1f;
+  }
 
-/* Tarjetas */
-.card{
-  background:#fff;
-  padding:40px;
-  border-radius:28px;
-  box-shadow:0 25px 60px rgba(0,0,0,.12);
-  max-width:520px;
-  width:90%;
-  text-align:center;
-  animation:fadeIn 1.2s ease;
-}
+  p{ color:#6b4a52; }
 
-.badge{
-  display:inline-block;
-  background:#ffe6ee;
-  color:#c2185b;
-  padding:8px 14px;
-  border-radius:999px;
-  font-weight:700;
-  margin-bottom:16px;
-}
+  .actions{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-top:20px;
+  }
 
-button{
-  border:none;
-  padding:14px 22px;
-  border-radius:999px;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-}
+  button{
+    border:none;
+    padding:14px 22px;
+    border-radius:999px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+  }
 
-.yes{
-  background:linear-gradient(135deg,#c2185b,#8e1450);
-  color:#fff;
-}
+  .yes{
+    background:linear-gradient(135deg,#c2185b,#8e1450);
+    color:#fff;
+    box-shadow:0 12px 25px rgba(194,24,91,.35);
+  }
 
-.no{
-  background:#fff;
-  border:2px solid #c2185b;
-  color:#c2185b;
-}
+  .no{
+    background:#fff;
+    border:2px solid #c2185b;
+    color:#c2185b;
+    position:relative;
+  }
+
+  /* Corazones */
+  .heart{
+    position:absolute;
+    bottom:-40px;
+    animation:floatUp linear forwards;
+    opacity:.9;
+    z-index:1;
+    pointer-events:none;
+  }
+
+  @keyframes floatUp{
+    from{ transform:translateY(0) scale(1); opacity:1; }
+    to{ transform:translateY(-120vh) scale(1.6); opacity:0; }
+  }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform:scale(.9); }
+    to{ opacity:1; transform:scale(1); }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- 🎶 Música PERMANENTE -->
-<audio id="musica" src="musica.mp3" loop></audio>
+<!-- 🎶 Audio permanente (NO se borra) -->
+<audio id="musica" src="musica.mp3" loop preload="auto"></audio>
 
-<!-- 🔁 Contenedor dinámico -->
+<!-- Contenedor de pantallas -->
 <div id="app"></div>
 
 <script>
-const app = document.getElementById("app");
-const audio = document.getElementById("musica");
+  const app = document.getElementById("app");
+  const audio = document.getElementById("musica");
 
-/* Pantalla 1 */
-app.innerHTML = `
-  <div class="card">
-    <div class="badge">💖 San Valentín</div>
-    <h1>¿Quieres ser mi<br>San Valentín?</h1>
-    <p>Te amo, mi donita preciosa 💖</p>
-    <button class="yes" onclick="aceptar()">Sí, quiero 💕</button>
-    <button class="no" id="noBtn">No</button>
-  </div>
-`;
-
-document.addEventListener("mouseenter", e=>{
-  if(e.target?.id==="noBtn"){
-    e.target.style.transform=
-      `translate(${Math.random()*200-100}px,${Math.random()*120-60}px)`;
-  }
-});
-
-/* Corazones */
-function lanzarCorazones(){
-  const interval = setInterval(()=>{
-    for(let i=0;i<8;i++){
-      const h=document.createElement("div");
-      h.className="heart";
-      h.innerHTML=["💖","💗","💕","💘"][Math.floor(Math.random()*4)];
-      h.style.left=Math.random()*100+"vw";
-      h.style.fontSize=20+Math.random()*30+"px";
-      h.style.animationDuration=4+Math.random()*4+"s";
-      document.body.appendChild(h);
-      setTimeout(()=>h.remove(),8000);
+  // Mantener música sonando (por si el navegador la pausa)
+  function keepPlaying(){
+    // intenta reanudar si por alguna razón quedó en pausa
+    if (audio && audio.paused) {
+      audio.play().catch(()=>{});
     }
-  },350);
-  setTimeout(()=>clearInterval(interval),4000);
-}
+  }
 
-/* Aceptar */
-function aceptar(){
-  audio.currentTime = 0.20;
-  audio.volume = 0;
-  audio.play();
+  // Fade-in de volumen suave
+  function fadeInAudio(target=0.6){
+    audio.volume = 0;
+    let v = 0;
+    const fade = setInterval(()=>{
+      v = Math.min(target, v + 0.02);
+      audio.volume = v;
+      if (v >= target) clearInterval(fade);
+    }, 200);
+  }
 
-  let v=0;
-  const fade=setInterval(()=>{
-    if(v<0.6){v+=0.02;audio.volume=v;}
-    else clearInterval(fade);
-  },200);
-
-  lanzarCorazones();
-
-  setTimeout(()=>{
+  // Pantallas (render)
+  function renderInicio(){
     app.innerHTML = `
       <div class="card">
-        <h2>💘 Entonces es una cita 💕</h2>
-        <p><strong>14 de febrero de 2026</strong><br>Il Vicolo Pizzeria</p>
-        <p>
+        <div class="badge">💖 San Valentín</div>
+        <h1>¿Quieres ser mi<br>San Valentín?</h1>
+        <p style="font-size:18px;margin:0 0 10px;">Te amo, mi donita preciosa 💖</p>
+
+        <div class="actions">
+          <button class="yes" id="yesBtn">Sí, quiero 💕</button>
+          <button class="no" id="noBtn">No</button>
+        </div>
+      </div>
+    `;
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    noBtn.addEventListener("mouseenter", () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 120 - 60;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    yesBtn.addEventListener("click", aceptar);
+  }
+
+  function renderCita(){
+    app.innerHTML = `
+      <div class="card">
+        <h2 style="margin:0;color:#2b1b1f;">💘 Entonces es una cita 💕</h2>
+        <p style="margin-top:15px;">
+          <strong style="color:#2b1b1f;">14 de febrero de 2026</strong><br>
+          Il Vicolo Pizzeria
+        </p>
+        <p style="margin-top:20px;font-size:17px;">
           Primer San Valentín de muchos.<br>
           Gracias por llenar mi vida de felicidad y amor.<br>
           Te amo con todo lo que soy 💕
         </p>
-        <button class="yes" onclick="final()">Ver más 💖</button>
+        <div class="actions">
+          <button class="yes" id="moreBtn">Ver más 💖</button>
+        </div>
       </div>
     `;
-  },2500);
-}
 
-/* Final */
-function final(){
-  app.innerHTML = `
-    <div class="card">
-      <img src="foto nostros jpg.jpeg"
-           style="width:100%;border-radius:20px;margin-bottom:15px;">
-      <p>Mi vida entera 💖</p>
-    </div>
-  `;
-}
+    document.getElementById("moreBtn").addEventListener("click", renderFinal);
+    keepPlaying();
+  }
+
+  function renderFinal(){
+    app.innerHTML = `
+      <div class="card">
+        <img src="foto nostros jpg.jpeg"
+             style="width:100%;border-radius:20px;margin-bottom:15px;">
+        <p style="font-size:16px;margin:0;">Mi vida entera 💖</p>
+      </div>
+    `;
+    keepPlaying();
+  }
+
+  // Corazones
+  function lanzarCorazones(){
+    const interval = setInterval(()=>{
+      for(let i=0;i<10;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = ["💖","💗","💕","💘"][Math.floor(Math.random()*4)];
+        h.style.left = Math.random()*100 + "vw";
+        h.style.fontSize = (18 + Math.random()*35) + "px";
+        h.style.animationDuration = (4 + Math.random()*4) + "s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(), 8500);
+      }
+    }, 300);
+
+    setTimeout(()=>clearInterval(interval), 4200);
+  }
+
+  // Acción principal
+  function aceptar(){
+    // iniciar música desde 0.20 s
+    audio.currentTime = 0.20;
+
+    // Play (con catch por políticas del navegador)
+    audio.play()
+      .then(()=> fadeInAudio(0.6))
+      .catch(()=>{ /* si falla, igual seguirá al segundo intento */ });
+
+    lanzarCorazones();
+
+    // Importante: volver a forzar play al cambiar pantalla
+    setTimeout(()=>{
+      renderCita();
+      keepPlaying();
+    }, 2500);
+  }
+
+  // Por si el navegador pausa al cambiar de pestaña y vuelve
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) keepPlaying();
+  });
+
+  // Arranque
+  renderInicio();
 </script>
 
 </body>
