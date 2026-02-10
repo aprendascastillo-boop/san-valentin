@@ -1,162 +1,212 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>San Valentín 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Valentín 💖</title>
 
-  <style>
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(135deg,#ffe3ea,#fff7f9);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#ffe3ea,#fff7f9);
+  font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow:hidden;
+}
 
-    .card{
-      background:#fff;
-      padding:40px;
-      border-radius:28px;
-      box-shadow:0 25px 60px rgba(0,0,0,.12);
-      max-width:520px;
-      width:90%;
-      text-align:center;
-      position:relative;
-    }
+.card{
+  background:#fff;
+  padding:40px;
+  border-radius:28px;
+  box-shadow:0 25px 60px rgba(0,0,0,.12);
+  max-width:520px;
+  width:90%;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
 
-    .badge{
-      display:inline-block;
-      background:#ffe6ee;
-      color:#c2185b;
-      padding:8px 14px;
-      border-radius:999px;
-      font-weight:700;
-      margin-bottom:16px;
-    }
+.badge{
+  display:inline-block;
+  background:#ffe6ee;
+  color:#c2185b;
+  padding:8px 14px;
+  border-radius:999px;
+  font-weight:700;
+  margin-bottom:16px;
+}
 
-    h1{
-      font-size:42px;
-      margin:0 0 12px;
-      color:#2b1b1f;
-    }
+h1{
+  font-size:42px;
+  margin:0 0 12px;
+  color:#2b1b1f;
+}
 
-    .subtitle{
-      font-size:18px;
-      color:#6b4a52;
-      margin-bottom:28px;
-      font-weight:500;
-    }
+.subtitle{
+  font-size:18px;
+  color:#6b4a52;
+  margin-bottom:28px;
+}
 
-    .actions{
-      display:flex;
-      justify-content:center;
-      gap:16px;
-      flex-wrap:wrap;
-    }
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+}
 
-    button{
-      border:none;
-      padding:14px 22px;
-      border-radius:999px;
-      font-size:16px;
-      font-weight:700;
-      cursor:pointer;
-      transition:.2s;
-    }
+button{
+  border:none;
+  padding:14px 22px;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
 
-    .yes{
-      background:linear-gradient(135deg,#c2185b,#8e1450);
-      color:#fff;
-      box-shadow:0 12px 25px rgba(194,24,91,.35);
-    }
+.yes{
+  background:linear-gradient(135deg,#c2185b,#8e1450);
+  color:#fff;
+  box-shadow:0 12px 25px rgba(194,24,91,.35);
+}
 
-    .yes:hover{
-      transform:scale(1.05);
-    }
+.no{
+  background:#fff;
+  border:2px solid #c2185b;
+  color:#c2185b;
+}
 
-    .no{
-      background:#fff;
-      border:2px solid #c2185b;
-      color:#c2185b;
-      position:relative;
-    }
+.heart-float{
+  position:absolute;
+  font-size:24px;
+  animation:float 6s linear infinite;
+  opacity:.8;
+}
 
-    .heart{
-      position:absolute;
-      right:-40px;
-      bottom:-40px;
-      font-size:120px;
-      opacity:.15;
-    }
-  </style>
+@keyframes float{
+  from{
+    transform:translateY(100vh) scale(1);
+    opacity:1;
+  }
+  to{
+    transform:translateY(-10vh) scale(1.5);
+    opacity:0;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="card">
-    <div class="badge">💖 San Valentín</div>
+<div class="card">
+  <div class="badge">💖 San Valentín</div>
+  <h1>¿Quieres ser mi<br>San Valentín?</h1>
+  <p class="subtitle">Te amo, mi donita preciosa 💖</p>
 
-    <h1>¿Quieres ser mi<br>San Valentín?</h1>
-
-    <p class="subtitle">
-      Te amo, mi donita preciosa 💖
-    </p>
-
-    <div class="actions">
-      <button class="yes" onclick="aceptar()">Sí, quiero 💕</button>
-      <button class="no" id="noBtn">No</button>
-    </div>
-
-    <div class="heart">💗</div>
+  <div class="actions">
+    <button class="yes" onclick="aceptar()">Sí, quiero 💕</button>
+    <button class="no" id="noBtn">No</button>
   </div>
+</div>
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
+<script>
+const noBtn = document.getElementById("noBtn");
 
-    noBtn.addEventListener("mouseenter", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 120 - 60;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+noBtn.addEventListener("mouseenter",()=>{
+  const x=Math.random()*200-100;
+  const y=Math.random()*120-60;
+  noBtn.style.transform=`translate(${x}px,${y}px)`;
+});
 
-    noBtn.addEventListener("mouseleave", () => {
-      noBtn.style.transform = "translate(0,0)";
-    });
+function crearCorazones(){
+  for(let i=0;i<40;i++){
+    const heart=document.createElement("div");
+    heart.className="heart-float";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=3+Math.random()*4+"s";
+    heart.style.fontSize=20+Math.random()*30+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),7000);
+  }
+}
 
-    function aceptar(){
-      document.body.innerHTML = `
-        <div style="
-          min-height:100vh;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          background:linear-gradient(135deg,#ffe3ea,#fff7f9);
-          font-family:system-ui;
-          text-align:center;
-          padding:20px;
-        ">
-          <div style="
-            background:#fff;
-            padding:50px;
-            border-radius:30px;
-            box-shadow:0 25px 60px rgba(0,0,0,.15);
-            max-width:600px;
-          ">
-            <h1 style="color:#c2185b;font-size:46px;">💘</h1>
-            <h2 style="margin:10px 0;">Entonces es una cita 💕</h2>
-            <p style="font-size:18px;color:#6b4a52;">
-              14 de febrero de 2026<br>
-              <strong>Il Vicolo Pizzeria</strong><br><br>
-              Gracias por decir que sí 💖
-            </p>
-          </div>
-        </div>
-      `;
-    }
-  </script>
+function aceptar(){
+  crearCorazones();
+
+  setTimeout(()=>{
+    document.body.innerHTML=`
+    <div style="
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#ffe3ea,#fff7f9);
+      font-family:system-ui;
+      text-align:center;
+      padding:20px;
+    ">
+      <div style="
+        background:#fff;
+        padding:45px;
+        border-radius:30px;
+        box-shadow:0 25px 60px rgba(0,0,0,.15);
+        max-width:520px;
+      ">
+        <h2>💘 Entonces es una cita 💕</h2>
+        <p style="margin-top:15px;">
+          <strong>14 de febrero de 2026</strong><br>
+          Il Vicolo Pizzeria
+        </p>
+        <p style="margin-top:20px;font-size:17px;color:#6b4a52;">
+          Primer San Valentín de muchos.<br>
+          Gracias por llenar mi vida de felicidad y amor.<br>
+          Te amo con todo lo que soy 💕
+        </p>
+        <button onclick="final()" style="
+          margin-top:25px;
+          padding:12px 22px;
+          border-radius:999px;
+          border:none;
+          background:#c2185b;
+          color:white;
+          font-weight:700;
+          cursor:pointer;
+        ">Ver más 💖</button>
+      </div>
+    </div>`;
+  },1200);
+}
+
+function final(){
+  document.body.innerHTML=`
+  <div style="
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#ffe3ea,#fff7f9);
+    text-align:center;
+    padding:20px;
+  ">
+    <div style="
+      background:#fff;
+      padding:30px;
+      border-radius:30px;
+      box-shadow:0 25px 60px rgba(0,0,0,.15);
+      max-width:500px;
+    ">
+      <img src="https://via.placeholder.com/400x300.png?text=Nuestra+Historia+💖"
+        style="width:100%;border-radius:20px;margin-bottom:15px;">
+      <p style="color:#6b4a52;font-size:16px;">
+        Nuestro comienzo 💖
+      </p>
+    </div>
+  </div>`;
+}
+</script>
 
 </body>
 </html>
