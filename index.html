@@ -16,6 +16,36 @@ body{
   font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   overflow:hidden;
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.heart-float{
+  position: absolute;
+  bottom: -40px;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+@keyframes floatUp{
+  from{
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to{
+    transform: translateY(-120vh) scale(1.6);
+    opacity: 0;
+  }
+}
 
 .card{
   background:#fff;
@@ -121,17 +151,22 @@ noBtn.addEventListener("mouseenter",()=>{
 });
 
 function crearCorazones(){
-  for(let i=0;i<40;i++){
-    const heart=document.createElement("div");
-    heart.className="heart-float";
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.animationDuration=3+Math.random()*4+"s";
-    heart.style.fontSize=20+Math.random()*30+"px";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),7000);
-  }
+  const interval = setInterval(() => {
+    for(let i=0;i<10;i++){
+      const heart = document.createElement("div");
+      heart.className = "heart-float";
+      heart.innerHTML = ["💖","💗","💘","💕"][Math.floor(Math.random()*4)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+      heart.style.fontSize = 18 + Math.random() * 35 + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+  }, 400);
+
+  setTimeout(() => clearInterval(interval), 4000);
 }
+
 
 function aceptar(){
   crearCorazones();
@@ -199,8 +234,12 @@ function final(){
       max-width:500px;
     ">
       <img src=foto nostros jpg.jpeg💖"
-        style="width:100%;border-radius:20px;margin-bottom:15px;">
-      <p style="color:#6b4a52;font-size:16px;">
+         style="
+       width:100%;
+       border-radius:20px;
+       margin-bottom:15px;
+       animation:fadeIn 1.5s ease;
+     ">
         Mi vida entera 💖
       </p>
     </div>
